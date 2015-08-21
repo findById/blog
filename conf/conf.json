@@ -1,0 +1,7 @@
+{
+    "ip": "${ip}",
+    "port": "8050",
+    "host": "{IP}:{Port}",
+    "context": "",
+    "locale": "en_US"
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>{{.title}}</title>
+<!-- seo.start 
+<meta name="keywords" content="攻城狮,大数据,Android,安卓,Java,JavaEE,JavaWeb,Golang,Python" />
+<meta name="description" content="攻城狮的博客" />
+<link rel="canonical" href="http://45.79.141.40:8050/" />-->
+<!-- seo.end -->
+<link href="/static/css/blog.css" type="text/css" rel="stylesheet" />
+<style>
+.pagination a{
+	float: left;
+	border: 1px solid #ccc;
+	display: inline;
+	padding: 3px 10px 3px 10px;
+	margin-right: 5px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	cursor: pointer;
+	background: #fff;
+	text-decoration:none;
+	color:#999;
+}
+
+.pagination a:hover{
+	border:1px solid #31ACE2; 
+	background-color:#F0FDFF; 
+	color:#31ACE2;
+}
+</style>
+</head>
+<body>
+    <div id="wrapper">
+        {{ range .items}}
+            <div class="item">
+                <div class="post-title">
+                    <span><a href="view/{{.Id}}" >{{.Title}}</a></span>
+                </div>
+                <div class="post-meta">
+                    <span>Posted on {{.Timestamp}}  |  by admin</span>
+                </div>
+                <div id="content-{{.Id}}" class="content">
+                    <span>{{.Content}}</span>
+                </div>
+            </div>
+        {{end}}
+        <div>
+            <span class="pagination">
+                <a href="articles?p={{.pre}}">上一页</a>
+                <a href="articles?p={{.next}}">下一页</a>
+            </span>
+        </div>
+    </div>
+</body>
+</html>

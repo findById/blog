@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+label {
+    display: block;
+    margin: 0.6em 0 0.2em;
+}
+input[type="text"], textarea {
+    padding: 0.3em;
+    background: #fff;
+    border: 1px solid #ddd;
+    font-size: 1.0em;
+    color: #333;
+    font-family: 'Droid Sans', Tahoma, Verdana, Arial;
+    display: inline-block;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    resize: none;
+}

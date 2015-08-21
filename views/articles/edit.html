@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{.title}}</title>
+    <link href="/static/css/blog.css" type="text/css" rel="stylesheet" />
+    <link href="/static/css/post.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <div id="wrapper" class="item">
+        <form action="/save/{{.action}}" method="POST">
+            <div><input type="text" name="title" placeholder="Title" value="{{.post_title}}"></div>
+            <lable></lable>
+            <div><textarea name="content" rows="20" cols="80">{{.post_content}}</textarea></div>
+            <div><input type="submit" value="Save"></div>
+        </form>
+    </div>
+</body>
+</html>
