@@ -1,26 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>{{.title}}</title>
-    <link href="/static/css/blog.css" type="text/css" rel="stylesheet" />
-    <link href="/static/css/post.css" type="text/css" rel="stylesheet" />
+    <link href="/static/css/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="/static/css/blog.css" type="text/css" rel="stylesheet"/>
+    <link href="/static/css/post.css" type="text/css" rel="stylesheet"/>
+    <script src="/static/plugins/jquery.min.js" type="text/javascript" language="JavaScript" charset="UTF-8"></script>
+    <script src="/static/plugins/thinkermd/js/thinker-md.vendor.min.js" type="text/javascript" language="JavaScript" charset="UTF-8"></script>
 </head>
 <body>
-    <div id="wrapper" class="item">
-        <form action="/save/{{.action}}" method="POST">
-            <div><input type="text" name="keywords" placeholder="keywords for seo"></div>
-            <lable></lable>
-            <div><input type="text" name="description" placeholder="description for seo"></div>
-            <lable></lable>
-            <div><input type="text" name="title" placeholder="Title"></div>
-            <lable></lable>
-            <div><textarea name="content" rows="20" cols="80"></textarea></div>
-            <div>
-                <input type="checkbox" name="status">公开
-            </div>
-            <div><input type="submit" value="Save"></div>
-        </form>
+<div id="wrapper" class="item">
+    <form action="/save/{{.action}}" method="POST">
+        <lable></lable>
+        <div><input class="textBox" type="text" name="title" placeholder="Title"></div>
+        <lable></lable>
+        <div><textarea class="textBox" name="content" rows="20" cols="80" data-provide="markdown" placeholder="请输入内容"></textarea></div>
+        <lable></lable>
+        <div><input class="textBox" type="text" name="keywords" placeholder="keywords for seo"></div>
+        <lable></lable>
+        <div><input class="textBox" type="text" name="description" placeholder="description for seo"></div>
+        <lable></lable>
+        <div><input class="textBox" type="text" name="lang" placeholder="语言"></div>
+        <lable></lable>
+        <div><input class="textBox" type="text" name="tag" placeholder="标签"></div>
+        <div>
+            可见性
+            <select name="status">
+                <option value="0" selected>公开</option>
+                <option value="1">不公开</option>
+            </select>
+        </div>
+        <div><input class="btn" type="submit" value="Save"></div>
+    </form>
+
+
+
+    <div class="input-group">
+        <span class="input-group-addon">$</span>
+        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+        <span class="input-group-addon">.00</span>
     </div>
+</div>
 </body>
 </html>
+<script type="text/javascript" language="JavaScript">
+    $("textarea[data-provide='markdown']").markdown({
+        language: "zh",
+        fullscreen: {
+            enable: true
+        },
+        resize: "vertical",
+        localStorage: "md",
+        imgurl: "/upload",
+        base64url: "/uploadBase64"
+    });
+
+    var test = function() {
+        var data = $("#form").serializeJSONString();
+        alert(data);
+    }
+</script>

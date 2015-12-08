@@ -18,16 +18,16 @@ func LoginAction(w http.ResponseWriter, r *http.Request) {
 	passwd := r.FormValue("passwd")
 	log.Println(email + "   " + passwd)
 	if email == "" || passwd == "" {
-		response(w, 0, "参数错误", nil)
+		response(w, 0, "用户名或密码错误", nil)
 		return
 	}
 	user, err := service.FindUserByEmail(email)
 	if err != nil {
-		response(w, 0, "用户不存在", nil)
+		response(w, 0, "用户名或密码错误", nil)
 		return
 	}
 	if user.Password != passwd {
-		response(w, 0, "密码错误", nil)
+		response(w, 0, "用户名或密码错误", nil)
 		return
 	}
 	// 存入cookie,使用cookie存储

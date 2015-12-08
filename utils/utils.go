@@ -1,4 +1,8 @@
 package utils
+import (
+	"math/rand"
+	"time"
+)
 
 func Substring(str string, start, length int) string {
 	rs := []rune(str)
@@ -26,3 +30,14 @@ func Substring(str string, start, length int) string {
 	}
 	return string(rs[start:end])
 }
+
+func GetRandomString(length int) (string) {
+	temp := "abcdefghijklmnopqrstuvwxyz-ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890";
+	result := "";
+	r := rand.New(rand.NewSource(time.Now().UnixNano()));
+	for i := 0; i < length; i++ {
+		result += string(temp[r.Intn(len(temp)) % len(temp)])
+	}
+	return result;
+}
+

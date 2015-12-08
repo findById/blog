@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload</title>
+</head>
+<body>
+<form id="form" action="" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" class="file" />
+    <input type="button" value="Upload" onclick="upload()" />
+</form>
+<progress id="progress" max="100" value="0"></progress>
+
+<!-- JavaScript -->
+<script src="/static/plugins/ajax.upload.js" type="text/javascript" language="JavaScript" charset="UTF-8"></script>
+</body>
+</html>

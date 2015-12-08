@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	db = "./blog.db"
+	db = "./build/blog.db"
 )
 
 func Init() {

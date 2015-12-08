@@ -11,12 +11,12 @@ import (
 	"time"
 )
 
-func SaveArticle(title, content, status string) {
+func SaveArticle(article entity.Article) {
 	dbm := dao.GetDBM(db)
 	defer dbm.Close()
 	timestamp := strconv.FormatInt(time.Now().Unix(), 10)
-	sql := "INSERT INTO article (title,timestamp,content,status,delFlg) VALUES (?,?,?,?,?)"
-	dbm.Exec(sql, title, timestamp, content, status, 0)
+	sql := "INSERT INTO article (title,content,keywords,description,lang,tag,timestamp,status,delFlg) VALUES (?,?,?,?,?,?,?,?,?)"
+	dbm.Exec(sql, article.Title,article.Content,article.Keywords,article.Description,article.Lang,article.Tag,timestamp,article.Status,0);
 }
 
 func UpdateArticle(id, title, content string) {
@@ -40,7 +40,7 @@ func FindArticleById(id int) (entity.Article, error) {
 	count := -1
 	for rows.Next() {
 		count++
-		rows.Scan(&item.Id, &item.Title, &item.Timestamp, &item.Content, &item.Status, &item.DelFlg)
+		rows.Scan(&item.Id, &item.Title, &item.Content, &item.Keywords, &item.Description, &item.Lang, &item.Tag, &item.Timestamp, &item.Status, &item.DelFlg)
 		tmp, err := strconv.ParseInt(item.Timestamp, 10, 0)
 		if err != nil {
 			tmp = time.Now().Unix()
@@ -68,7 +68,7 @@ func FindArticles(start int, size int) ([]entity.Article, error) {
 	for rows.Next() {
 		count++
 		var item entity.Article
-		rows.Scan(&item.Id, &item.Title, &item.Timestamp, &item.Content, &item.Status, &item.DelFlg)
+		rows.Scan(&item.Id, &item.Title, &item.Content, &item.Keywords, &item.Description, &item.Lang, &item.Tag, &item.Timestamp, &item.Status, &item.DelFlg)
 		tmp, err := strconv.ParseInt(item.Timestamp, 10, 0)
 		if err != nil {
 			tmp = time.Now().Unix()

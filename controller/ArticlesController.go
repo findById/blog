@@ -8,19 +8,33 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"blog/utils"
+	"blog/entity"
 )
 
 func ArticleSaveHandler(w http.ResponseWriter, r *http.Request, action string) {
 	title := r.FormValue("title")
 	content := r.FormValue("content")
+	keywords := r.FormValue("keywords")
+	description := r.FormValue("description")
+	lang := r.FormValue("lang")
+	tag := r.FormValue("tag")
 	status := r.FormValue("status")
-	// tag := r.FormValue("tag")
 
-	service.SaveArticle(title, content, status)
+	var article entity.Article;
+	article.Title = title;
+	article.Content = content;
+	article.Keywords = keywords;
+	article.Description = description;
+	article.Lang = lang;
+	article.Status = status;
+	article.Tag = tag;
+
+	service.SaveArticle(article)
 
 	tmp := time.Unix(time.Now().Unix(), 0).Format("20060102")
-	tmp2 := strings.Replace(title, " ", "_", -1)
-	filename := "posted/" + tmp + "_" + tmp2 + ".txt"
+	tmp2 := strings.Replace(title, " ", "-", -1)
+	filename := "posted/" + tmp + "-" + tmp2 + ".txt"
 	ioutil.WriteFile(filename, []byte(content), 0600)
 
 	http.Redirect(w, r, "/articles", http.StatusFound)
@@ -41,11 +55,12 @@ func ArticleEditHandler(w http.ResponseWriter, r *http.Request, action string) {
 }
 
 func ArticlesHandler(w http.ResponseWriter, r *http.Request) {
+	logger.Info("request:", "[" + r.RemoteAddr + "][" + r.UserAgent() + "][" + r.Host + r.RequestURI + "" + "]")
+
 	p, err := strconv.Atoi(r.URL.Query().Get("p"))
 	if err != nil {
 		p = 1
 	}
-	logger.Info("request:", "["+r.RemoteAddr+"]["+r.UserAgent()+"]["+r.Host+r.RequestURI+""+"]")
 	size := 10
 	offset := (p - 1) * size
 
@@ -54,12 +69,16 @@ func ArticlesHandler(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	model := make(map[string]interface{})
+	model := make(map[string]interface{});
+	model["timestamp"] = time.Unix(time.Now().Unix(), 0).Format("2006-01-02 15:04:05");
+	model["token"] = utils.GetRandomString(10);
+
+	model["title"] = "Insert title here";
+
 	model["items"] = items
-	model["title"] = "Insert title here"
 
 	count := service.Count("article")
-	max, _ := strconv.ParseInt(strconv.Itoa(offset+size), 10, 64)
+	max, _ := strconv.ParseInt(strconv.Itoa(offset + size), 10, 64)
 
 	var next int
 	if max < count {
@@ -92,6 +111,14 @@ func ArticleByIdHandler(w http.ResponseWriter, r *http.Request, action string) {
 		return
 	}
 	model := make(map[string]interface{})
+	model["keywords"] = "" + item.Keywords;
+	model["description"] = "" + item.Description;
+	model["lang"] = "" + item.Lang;
+	model["type"] = "" + item.Tag;
+
+	model["timestamp"] = time.Unix(time.Now().Unix(), 0).Format("20060102150405");
+	model["token"] = utils.GetRandomString(20);
+
 	model["item"] = item
 	model["title"] = item.Title
 	ExecuteTemplate(w, "view", model)

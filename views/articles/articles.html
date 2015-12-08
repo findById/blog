@@ -1,58 +1,119 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>{{.title}}</title>
-<!-- seo.start 
-<meta name="keywords" content="攻城狮,大数据,Android,安卓,Java,JavaEE,JavaWeb,Golang,Python" />
-<meta name="description" content="攻城狮的博客" />
-<link rel="canonical" href="http://45.79.141.40:8050/" />-->
-<!-- seo.end -->
-<link href="/static/css/blog.css" type="text/css" rel="stylesheet" />
-<style>
-.pagination a{
-	float: left;
-	border: 1px solid #ccc;
-	display: inline;
-	padding: 3px 10px 3px 10px;
-	margin-right: 5px;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	cursor: pointer;
-	background: #fff;
-	text-decoration:none;
-	color:#999;
-}
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
 
-.pagination a:hover{
-	border:1px solid #31ACE2; 
-	background-color:#F0FDFF; 
-	color:#31ACE2;
-}
-</style>
+    <title>{{.title}}</title>
+
+    <link href="/static/css/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="/static/css/blog.css" type="text/css" rel="stylesheet"/>
+
+    <style>
+        .pagination a {
+            float: left;
+            border: 1px solid #ccc;
+            display: inline;
+            padding: 3px 10px 3px 10px;
+            margin-right: 5px;
+            border-radius: 3px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            cursor: pointer;
+            background: #fff;
+            text-decoration: none;
+            color: #999;
+        }
+
+        .pagination a:hover {
+            border: 1px solid #31ACE2;
+            background-color: #F0FDFF;
+            color: #31ACE2;
+        }
+    </style>
 </head>
 <body>
-    <div id="wrapper">
-        {{ range .items}}
-            <div class="item">
-                <div class="post-title">
-                    <span><a href="view/{{.Id}}" >{{.Title}}</a></span>
-                </div>
-                <div class="post-meta">
-                    <span>Posted on {{.Timestamp}}  |  by admin</span>
-                </div>
-                <div id="content-{{.Id}}" class="content">
-                    <span>{{.Content}}</span>
-                </div>
-            </div>
-        {{end}}
-        <div>
-            <span class="pagination">
-                <a href="articles?p={{.pre}}">上一页</a>
-                <a href="articles?p={{.next}}">下一页</a>
-            </span>
+<div style="display:none;" id="vars" data-net="1" data-token="{{.token}}" data-time="{{.timestamp}}"></div>
+
+<!-- Blog master nav -->
+<header class="header">
+
+</header>
+
+<!-- Blog master toolbar -->
+<div class="toolbar toolbar-default">
+
+    <div class="toolbar-left">
+        <a href="/">
+            BLOG
+        </a>
+    </div>
+
+    <div class="toolbar-title">
+
+    </div>
+
+    <div class="toolbar-right">
+        <a href="#">Right1</a>
+        <a href="#" class="">Right</a>
+    </div>
+
+</div>
+
+<!-- Blog page layout -->
+<div class="bs-docs-header">
+    <div class="container">
+        <h1>组件</h1>
+
+        <p>无数可复用的组件，包括字体图标、下拉菜单、导航、警告框、弹出框等更多功能。</p>
+    </div>
+</div>
+
+<div id="wrapper">
+    {{ range .items}}
+    <div class="item">
+        <div class="post-title">
+            <span><h1><a href="view/{{.Id}}">{{.Title}}</a></h1></span>
+        </div>
+        <div class="post-meta">
+            <label class="label label-info">lang</label>
+            <label class="label label-info">type</label>
+            &nbsp;
+            <span>Posted on {{.Timestamp}}  |  by admin</span>
+        </div>
+        <div id="content-{{.Id}}" class="content">
+            <span>{{.Content}}</span>
         </div>
     </div>
+    {{end}}
+
+    <div>
+        <span class="pagination">
+            <a href="articles?p={{.pre}}">上一页</a>
+            <a href="articles?p={{.next}}">下一页</a>
+        </span>
+    </div>
+</div>
+
+
+<footer class="footer">
+
+</footer>
+
+<!-- JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/static/plugins/jquery.min.js" type="text/javascript"></script>
+<!-- prettify -->
+<script src="/static/plugins/prettify/prettify.js" type="text/javascript"></script>
+<link href="/static/plugins/prettify/prettify.css" type="text/css" rel="stylesheet"/>
+<!-- marked -->
+<script src="/static/plugins/marked/marked.js" type="text/javascript"></script>
+
 </body>
 </html>

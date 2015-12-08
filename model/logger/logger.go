@@ -29,11 +29,11 @@ func Write(level, tag, content string) {
 	}
 	tmp := time.Unix(time.Now().Unix(), 0).Format("20060102")
 
-	WriteFile("logs/"+tmp+"_"+level+".out", ""+tag+" "+content)
+	WriteFile("./build/logs/" + tmp + "_" + level + ".out", "" + tag + " " + content)
 }
 
 func WriteFile(file, content string) bool {
-	f, err := os.OpenFile(file, os.O_CREATE|os.O_APPEND|os.O_RDWR, 0644)
+	f, err := os.OpenFile(file, os.O_CREATE | os.O_APPEND | os.O_RDWR, 0644)
 	if err != nil {
 		return false
 	}

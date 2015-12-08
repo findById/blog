@@ -9,11 +9,15 @@ type User struct {
 }
 
 type Article struct {
-	Id        int
-	Title     string
-	Content   string
-	Timestamp string
-	Status    int
-	DelFlg    int
-	UserId    int
+	Id          int
+	Title       string
+	Content     string
+	Keywords    string
+	Description string
+	Timestamp   string
+	Status      string
+	DelFlg      int
+	UserId      int
+	Lang        string
+	Tag        string
 }

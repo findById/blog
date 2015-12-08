@@ -1,4 +1,12 @@
 @CHARSET "UTF-8";
+@import url("/static/plugins/thinkermd/css/thinker-md.vendor.css");
+@import url("/static/plugins/thinkermd/emoji/nature.css");
+@import url("/static/plugins/thinkermd/emoji/object.css");
+@import url("/static/plugins/thinkermd/emoji/people.css");
+@import url("/static/plugins/thinkermd/emoji/place.css");
+@import url("/static/plugins/thinkermd/emoji/Sysmbols.css");
+@import url("/static/plugins/thinkermd/emoji/twemoji.css");
+
 label {
     display: block;
     margin: 0.6em 0 0.2em;
