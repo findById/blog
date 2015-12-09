@@ -36,8 +36,15 @@ func GetRandomString(length int) (string) {
 	result := "";
 	r := rand.New(rand.NewSource(time.Now().UnixNano()));
 	for i := 0; i < length; i++ {
-		result += string(temp[r.Intn(len(temp)) % len(temp)])
+		result += string(temp[r.Intn(len(temp)) % len(temp)]);
 	}
 	return result;
+}
+
+func IsEmpty(obj string) bool {
+	if (obj == "" || len(string(obj)) <= 0) {
+		return true;
+	}
+	return false;
 }
 

@@ -2,10 +2,12 @@ package entity
 
 type User struct {
 	Id        int
-	FirstName string
-	LastName  string
+	First_Name string
+	Last_Name  string
 	Email     string
 	Password  string
+	Status      string
+	DelFlg      int
 }
 
 type Article struct {

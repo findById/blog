@@ -15,6 +15,8 @@ const (
 	PathListSeparator = string(os.PathListSeparator)
 
 	VERSION = "0.0.1"
+
+	DATABASE_NAME = "./build/blog.db"
 )
 
 var (

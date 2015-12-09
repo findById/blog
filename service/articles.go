@@ -9,10 +9,11 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"blog/conf"
 )
 
 func SaveArticle(article entity.Article) {
-	dbm := dao.GetDBM(db)
+	dbm := dao.GetDBM(conf.DATABASE_NAME)
 	defer dbm.Close()
 	timestamp := strconv.FormatInt(time.Now().Unix(), 10)
 	sql := "INSERT INTO article (title,content,keywords,description,lang,tag,timestamp,status,delFlg) VALUES (?,?,?,?,?,?,?,?,?)"
@@ -20,15 +21,23 @@ func SaveArticle(article entity.Article) {
 }
 
 func UpdateArticle(id, title, content string) {
-	dbm := dao.GetDBM(db)
+	dbm := dao.GetDBM(conf.DATABASE_NAME)
 	defer dbm.Close()
 	timestamp := strconv.FormatInt(time.Now().Unix(), 10)
 	sql := "UPDATE article SET title=?,timestamp=?,content=? WHERE id=?"
 	dbm.Exec(sql, title, timestamp, content, id)
 }
 
+func DeleteArticle(id string) {
+	dbm := dao.GetDBM(conf.DATABASE_NAME)
+	defer dbm.Close()
+	sql := "UPDATE article SET delFlg=? WHERE id=?"
+	dbm.Exec(sql, 1, id)
+}
+
+
 func FindArticleById(id int) (entity.Article, error) {
-	dbm := dao.GetDBM(db)
+	dbm := dao.GetDBM(conf.DATABASE_NAME)
 	defer dbm.Close()
 	sql := "SELECT * FROM article WHERE id=? AND delFlg=0"
 	rows, err := dbm.Query(sql, strconv.Itoa(id))
@@ -54,13 +63,13 @@ func FindArticleById(id int) (entity.Article, error) {
 	return item, nil
 }
 
-func FindArticles(start int, size int) ([]entity.Article, error) {
-	dbm := dao.GetDBM(db)
+func FindArticles(offset, size int) ([]entity.Article, int64, error) {
+	dbm := dao.GetDBM(conf.DATABASE_NAME)
 	defer dbm.Close()
-	sql := "SELECT * FROM article WHERE delFlg=0 LIMIT ?,?"
-	rows, err := dbm.Query(sql, start, size)
+	sql := "SELECT * FROM article WHERE delFlg=0 AND status=0 LIMIT ?,?"
+	rows, err := dbm.Query(sql, offset, size)
 	if err != nil {
-		log.Fatal(err)
+		return nil, 0, err;
 	}
 	defer rows.Close()
 	var items []entity.Article = make([]entity.Article, 0)
@@ -91,15 +100,15 @@ func FindArticles(start int, size int) ([]entity.Article, error) {
 		items = append(items, item)
 	}
 	if count == -1 {
-		return nil, errors.New("no data")
+		return nil, 0, errors.New("no data");
 	}
-	return items, nil
+	return items, GetArticleCount("article"), nil
 }
 
-func CountArticle() int64 {
-	dbm := dao.GetDBM(db)
+func GetArticleCount(table string) int64 {
+	dbm := dao.GetDBM(conf.DATABASE_NAME)
 	defer dbm.Close()
-	sql := "SELECT count(*) as count FROM article WHERE delFlg=0"
+	sql := "SELECT count(*) as count FROM " + table + " WHERE delFlg=0 AND status=0"
 	rows, err := dbm.Query(sql)
 	if err != nil {
 		log.Fatal(err)

@@ -10,9 +10,9 @@ import (
 	"io"
 	"log"
 	"encoding/json"
-	"math/rand"
-	"time"
 	"io/ioutil"
+	"blog/conf"
+	"blog/utils"
 )
 
 const (
@@ -44,11 +44,16 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 		return;
 	}
 	if r.Method == "POST" {
-		fmt.Println("Client:", r.RemoteAddr, "Method:", r.Method, "URL:", r.Host + r.RequestURI)
-
+		timestamp := r.URL.Query().Get("timestamp");
 		token := r.URL.Query().Get("token")
+		md := r.URL.Query().Get("md")
 
-		if ("90f8d5RyvmxPeHJ4RL6h" != token) {
+		if ("w8ARe4rISz8d3UdjSM9k" != token || "" == timestamp) {
+			http.NotFound(w, r);
+			return;
+		}
+
+		if !CheckCookie(w, r, "upload") {
 			http.NotFound(w, r);
 			return;
 		}
@@ -85,18 +90,22 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 			checkError(err, "Open file error." + fileName)
 			defer src.Close()
 
-			pathSeparator := string(os.PathSeparator)
+			realPath := uploadDir + conf.PathSeparator + utils.GetRandomString(20) + fileExt;
 
-			realPath := uploadDir + pathSeparator + fileName;
-
-			output := RootDir + pathSeparator + realPath;
+			output := RootDir + conf.PathSeparator + realPath;
 			dst, err := os.OpenFile(output, os.O_WRONLY | os.O_CREATE, 0666)
 			checkError(err, "Open local file error")
 			defer dst.Close()
 			io.Copy(dst, src)
 
 			var item FileItem;
-			item.Path = strings.Replace(realPath, pathSeparator, "/", -1);
+			item.Path = strings.Replace(realPath, conf.PathSeparator, "/", -1);
+			//
+			if "true" == md {
+				w.Write([]byte(item.Path));
+				return;
+			}
+			//
 			item.OriginName = fileName;
 			items = append(items, item);
 		}
@@ -110,17 +119,6 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func getString(length int) (string) {
-	temp := "abcdefghijklmnopqrstuvwxyz-ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890";
-	result := "";
-	r := rand.New(rand.NewSource(time.Now().UnixNano()));
-	for i := 0; i < length; i++ {
-		result += string(temp[r.Intn(len(temp)) % len(temp)])
-	}
-	log.Println(result);
-	return result;
-}
-
 func checkError(err error, message string) {
 	if (err != nil) {
 		println(err.Error() + message)
@@ -128,7 +126,7 @@ func checkError(err error, message string) {
 }
 
 func checkContentType(name string) bool {
-	ext := []string{".apk", ".zip", ".png"}
+	ext := []string{".apk", ".zip", ".png", ".jpg", ".gif"}
 	for _, v := range ext {
 		if v == name {
 			return true

@@ -25,3 +25,54 @@ input[type="text"], textarea {
     box-sizing: border-box;
     resize: none;
 }
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+}
+.btn:hover {
+    color: #31ACE2;
+    text-decoration: none;
+    border: 1px solid #31ACE2;
+    background: #F0FDFF;
+}
+
+
+
+.textBox {
+    border: 1px solid #CCC;
+}
+
+input[type="submit"], input[type="button"] {
+    border: 1px solid #CCC;
+    background: #FFF;
+    cursor: pointer;
+    color: #999;
+}
+
+input[type="submit"]:hover, input[type="button"]:hover {
+    color: #31ACE2;
+    text-decoration: none;
+    border: 1px solid #31ACE2;
+    background: #F0FDFF;
+}
+
+.post {
+    margin-top: 10px;
+}

@@ -5,5 +5,62 @@
     <title>{{.title}}</title>
 </head>
 <body>
+
+<div>
+    <form id="form" action="" method="POST">
+        <lable></lable>
+        <div class="post"><input class="textBox" type="text" name="email" placeholder="email/username"></div>
+        <lable></lable>
+        <div class="post"><input class="textBox" type="password" name="passwd" placeholder="password"></div>
+
+        <div class="post"><input id="submit" class="btn" type="submit" value="Sign In"></div>
+    </form>
+</div>
+
+<script src="/static/plugins/jquery.min.js" type="text/javascript" language="JavaScript" charset="UTF-8"></script>
+<script src="/static/plugins/jquery.plugins.js" type="text/javascript" language="JavaScript" charset="UTF-8"></script>
 </body>
 </html>
+<script type="text/javascript" language="JavaScript">
+    $("#submit").click(function () {
+        var result = $("form").serializeJSONString();
+        var redirect = getParameter("redirect");
+        alert(redirect);
+        $.ajax({
+            url: "/account/login",
+            dataType: "JSON",
+            cache: false,
+            contentType: "application/json",
+            type: "POST",
+            data: result,
+            sync: false,
+            beforeSend: function (xhr) {
+            },
+            success: function (data) {
+                if (data.statusCode == 200) {
+                    if (redirect != null && redirect != "") {
+                        window.location.href = redirect;
+                    } else {
+                        window.location.href = "/";
+                    }
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("error: " + error);
+            },
+            complete: function (xhr, ts) {
+            }
+        });
+    });
+
+    var getParameter = function (key) {
+        var reg = new RegExp("(^|&)"+ key +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r != null) {
+            return r[2];
+        }
+        return null;
+    }
+</script>

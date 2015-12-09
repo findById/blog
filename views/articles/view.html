@@ -35,13 +35,15 @@
     </div>
 
     <div class="toolbar-right">
-        <a href="#" class="settings-btn">:&nbsp;&nbsp;</a>
     </div>
 
 </div>
 
 <!-- Blog master menu -->
-<div class="menu-btn">M</div>
+<div class="tool-view">
+    <div class="go-top">^</div>
+    <div class="menu-btn">M</div>
+</div>
 <div class="menu-model hide"></div>
 <div class="menu-view closed">
     <div class="toolbar">Menu</div>
@@ -50,7 +52,7 @@
 <!-- Blog page layout -->
 <div class="bs-docs-header">
     <div class="container">
-        <h1>BLOG</h1>
+        <h1>{{.item.Title}}</h1>
         <p>blog</p>
     </div>
 </div>
@@ -72,7 +74,9 @@
 </div>
 
 <footer class="footer">
-
+    <div class="copyright">
+        &copy;2015
+    </div>
 </footer>
 
 <!-- JavaScript
@@ -89,15 +93,26 @@
 </html>
 <script type="text/javascript">
     var tmp = marked($("#result").val());
-    console.log(tmp);
+    // console.log(tmp);
     $("#content").html(tmp);
 
     $(document).ready(function () {
+        // prettify
         $("pre").addClass("prettyprint linenums:0");
         prettyPrint();
+
+        // to top
+        $(window).scroll(function () {
+            // console.log($(window).scrollTop());
+            if ($(window).scrollTop() > 500) {
+                $(".go-top").fadeIn(200).css("display", "block");
+            } else {
+                $(".go-top").fadeOut(200);
+            }
+        });
     });
 
-    $(".menu-btn").click(function() {
+    $(".menu-btn").click(function () {
         if ($(".menu-view").hasClass("closed") && $(".menu-model").hasClass("hide")) {
             $(".menu-view").removeClass("closed").addClass("opened");
             $(".menu-model").removeClass("hide").addClass("show");
@@ -106,7 +121,7 @@
             $(".menu-model").removeClass("show").addClass("hide");
         }
     });
-    $(".menu-model").click(function() {
+    $(".menu-model").click(function () {
         if ($(".menu-view").hasClass("closed") && $(".menu-model").hasClass("hide")) {
             $(".menu-view").removeClass("closed").addClass("opened");
             $(".menu-model").removeClass("hide").addClass("show");
@@ -114,5 +129,9 @@
             $(".menu-view").removeClass("opened").addClass("closed");
             $(".menu-model").removeClass("show").addClass("hide");
         }
+    });
+
+    $(".go-top").click(function () {
+        $("body,html").animate({"scrollTop": 0}, 500);
     });
 </script>
