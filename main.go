@@ -12,6 +12,7 @@ import (
 	"blog/model/logger"
 	"regexp"
 	"strings"
+	"time"
 )
 
 var (
@@ -69,13 +70,15 @@ func main() {
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))));
 
 	// 首页
-	mux.HandleFunc("/", mainHandler);
+	mux.HandleFunc("/", MainHandler);
 
 	http.ListenAndServe(conf.Conf.Host, mux);
 }
 
-func mainHandler(response http.ResponseWriter, request *http.Request) {
-	logger.Log("console", "request", "[" + request.RemoteAddr + "][" + request.UserAgent() + "][" + request.Host + request.RequestURI + "]");
+func MainHandler(response http.ResponseWriter, request *http.Request) {
+	logger.Log("console", "request", "[" + time.Unix(time.Now().Unix(), 0).Format("2006-01-02 15:04:05") + "][" +
+	request.RemoteAddr + "][" + request.UserAgent() + "][" + request.Host + request.RequestURI + "]");
+
 	if request.URL.Path != "/" {
 		http.NotFound(response, request);
 		return
@@ -95,7 +98,8 @@ var valid = regexp.MustCompile("^/(view|articles)/([a-zA-Z0-9]+)$")
 
 func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
 	return func(response http.ResponseWriter, request *http.Request) {
-		logger.Log("console", "request", "[" + request.RemoteAddr + "][" + request.UserAgent() + "][" + request.Host + request.RequestURI + "]");
+		logger.Log("console", "request", "[" + time.Unix(time.Now().Unix(), 0).Format("2006-01-02 15:04:05") + "][" +
+		request.RemoteAddr + "][" + request.UserAgent() + "][" + request.Host + request.RequestURI + "]");
 		m := valid.FindStringSubmatch(request.URL.Path);
 		if m == nil {
 			http.NotFound(response, request);

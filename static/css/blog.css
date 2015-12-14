@@ -5,6 +5,7 @@
     background: #459df5;
     min-height: 40px;
     width: 100%;
+    text-align: center;
 }
 
 @media (min-width: 200px) {

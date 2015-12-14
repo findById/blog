@@ -31,7 +31,7 @@ func CheckCookie(response http.ResponseWriter, request *http.Request, action str
 	if e != nil {
 		return false;
 	}
-	logger.Info(action, "[" + string(b) + "][" + time.Unix(time.Now().Unix(), 0).Format("20060102150405") + "][" + request.RemoteAddr +
+	logger.Info(action, "[" + string(b) + "][" + time.Unix(time.Now().Unix(), 0).Format("2006-01-02 15:04:05") + "][" + request.RemoteAddr +
 	"][" + request.UserAgent() + "][" + request.Host + request.RequestURI + "]");
 	return true;
 }

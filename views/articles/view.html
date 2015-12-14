@@ -46,7 +46,9 @@
 </div>
 <div class="menu-model hide"></div>
 <div class="menu-view closed">
-    <div class="toolbar">Menu</div>
+    <div class="toolbar">About me</div>
+
+    <div class="asdf" style="height: 100%; bottom: 0px;">admin@admin.com</div>
 </div>
 
 <!-- Blog page layout -->
@@ -63,7 +65,9 @@
             <span>Posted on {{.item.Timestamp}} by admin</span>
             <br/>
             <label class="label label-info">{{.lang}}</label>
+            {{if .type}}
             <label class="label label-info">{{.type}}</label>
+            {{end}}
         </div>
         <div id="content" class="content">
             <span>

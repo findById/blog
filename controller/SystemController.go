@@ -18,13 +18,17 @@ func InstallAction(response http.ResponseWriter, request *http.Request) {
 	", title varchar(50)" +
 	", content text" +
 	", keywords varchar(100)" +
-	", description varchar(100)" +
+	", description varchar(200)" +
 	", lang varchar(10)" +
 	", tag varchar(10)" +
 	", timestamp varchar(50)" +
 	", status varchar(5)" +
 	", delFlg varchar(5)" +
 	");";
+	dbm.Exec(sql);
+	logger.Debug("DB", sql);
+
+	sql = "DELETE user";
 	dbm.Exec(sql);
 	logger.Debug("DB", sql);
 

@@ -118,7 +118,8 @@ func ArticleEditHandler(w http.ResponseWriter, r *http.Request, action string) {
 }
 
 func ArticlesHandler(w http.ResponseWriter, r *http.Request) {
-	logger.Log("console", "request", "[" + r.RemoteAddr + "][" + r.UserAgent() + "][" + r.Host + r.RequestURI + "]");
+	logger.Log("console", "request", "[" + time.Unix(time.Now().Unix(), 0).Format("2006-01-02 15:04:05") + "][" +
+	r.RemoteAddr + "][" + r.UserAgent() + "][" + r.Host + r.RequestURI + "]");
 
 	p, err := strconv.Atoi(r.URL.Query().Get("p"))
 	if err != nil {
@@ -135,6 +136,8 @@ func ArticlesHandler(w http.ResponseWriter, r *http.Request) {
 	model := make(map[string]interface{});
 	model["timestamp"] = time.Unix(time.Now().Unix(), 0).Format("20060102150405");
 	model["token"] = utils.GetRandomString(20);
+	model["keywords"] = "";
+	model["description"] = "";
 
 	model["title"] = "Insert title here";
 

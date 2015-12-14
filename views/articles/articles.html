@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <meta name="keywords" content="{{.keywords}}">
+    <meta name="description" content="{{.description}}">
     <meta name="author" content="">
 
     <title>{{.title}}</title>
@@ -49,18 +49,13 @@
 <div class="toolbar toolbar-default">
 
     <div class="toolbar-left">
-        <a href="/">
-            BLOG
-        </a>
+        <a href="/">BLOG</a>
     </div>
 
     <div class="toolbar-title">
-
     </div>
 
     <div class="toolbar-right">
-        <a href="#">Right1</a>
-        <a href="#" class="">Right</a>
     </div>
 
 </div>
@@ -68,9 +63,9 @@
 <!-- Blog page layout -->
 <div class="bs-docs-header">
     <div class="container">
-        <h1>组件</h1>
+        <h1>Hello</h1>
 
-        <p>无数可复用的组件，包括字体图标、下拉菜单、导航、警告框、弹出框等更多功能。</p>
+        <p>admin@admin.com</p>
     </div>
 </div>
 
@@ -81,13 +76,16 @@
             <span><h1><a href="view/{{.Id}}">{{.Title}}</a></h1></span>
         </div>
         <div class="post-meta">
-            <label class="label label-info">lang</label>
-            <label class="label label-info">type</label>
+            <label class="label label-info">{{.Lang}}</label>
+            {{if .Tag}}
+            <label class="label label-info">{{.Tag}}</label>
+            {{end}}
             &nbsp;
             <span>Posted on {{.Timestamp}}  |  by admin</span>
         </div>
+        <br/>
         <div id="content-{{.Id}}" class="content">
-            <span>{{.Content}}</span>
+            <span>{{.Description}}</span>
         </div>
     </div>
     {{end}}
@@ -99,7 +97,6 @@
         </span>
     </div>
 </div>
-
 
 <footer class="footer">
 

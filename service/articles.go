@@ -3,11 +3,9 @@ package service
 import (
 	"blog/dao"
 	"blog/entity"
-	"blog/utils"
 	"errors"
 	"log"
 	"strconv"
-	"strings"
 	"time"
 	"blog/conf"
 )
@@ -83,35 +81,21 @@ func FindArticles(offset, size int) ([]entity.Article, int64, error) {
 			tmp = time.Now().Unix()
 		}
 		item.Timestamp = time.Unix(tmp, 0).Format("2006-01-02")
-		item.Content = utils.Substring(item.Content, 0, 100) + "..."
-		item.Content = strings.Replace(item.Content, "```java", "", -1)
-		item.Content = strings.Replace(item.Content, "```go", "", -1)
-		item.Content = strings.Replace(item.Content, "```golang", "", -1)
-		item.Content = strings.Replace(item.Content, "```php", "", -1)
-		item.Content = strings.Replace(item.Content, "```c", "", -1)
-		item.Content = strings.Replace(item.Content, "```javascript", "", -1)
-		item.Content = strings.Replace(item.Content, "```js", "", -1)
-		item.Content = strings.Replace(item.Content, "```css", "", -1)
-		item.Content = strings.Replace(item.Content, "```html", "", -1)
-		item.Content = strings.Replace(item.Content, "```sql", "", -1)
-		item.Content = strings.Replace(item.Content, "```shell", "", -1)
-		item.Content = strings.Replace(item.Content, "```", "", -1)
-		item.Content = strings.Replace(item.Content, "<br>", "", -1)
 		items = append(items, item)
 	}
 	if count == -1 {
 		return nil, 0, errors.New("no data");
 	}
-	return items, GetArticleCount("article"), nil
+	return items, GetArticleCount(), nil
 }
 
-func GetArticleCount(table string) int64 {
+func GetArticleCount() int64 {
 	dbm := dao.GetDBM(conf.DATABASE_NAME)
 	defer dbm.Close()
-	sql := "SELECT count(*) as count FROM " + table + " WHERE delFlg=0 AND status=0"
+	sql := "SELECT count(*) as count FROM article WHERE delFlg=0 AND status=0"
 	rows, err := dbm.Query(sql)
 	if err != nil {
-		log.Fatal(err)
+		return 0;
 	}
 	defer rows.Close()
 	var count int64

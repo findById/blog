@@ -25,7 +25,6 @@
     $("#submit").click(function () {
         var result = $("form").serializeJSONString();
         var redirect = getParameter("redirect");
-        alert(redirect);
         $.ajax({
             url: "/account/login",
             dataType: "JSON",
