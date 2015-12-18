@@ -18,6 +18,10 @@
     }
 }
 
+@media (max-width: 600px) {
+
+}
+
 .toolbar-default {
     position: fixed;
     z-index: 1000;
@@ -142,6 +146,19 @@
     cursor: pointer;
 }
 
+.menu-toolbar {
+    background: #459df5;
+    color: #FFFFFF;
+    line-height: 40px;
+    text-align: center;
+}
+
+.menu-content {
+    width: 100%;
+    height: 100%;
+    word-wrap: break-word;
+}
+
 .go-top {
     display: none;
     background: rgba(69, 157, 245, .9);
@@ -163,8 +180,8 @@
 .tool-view {
     position: fixed;
     z-index: 999;
-    right: 50px;
-    bottom: 100px;
+    right: 20px;
+    bottom: 30px;
 }
 
 /** **/

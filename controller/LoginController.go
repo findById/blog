@@ -11,6 +11,7 @@ import (
 	"time"
 	"blog/model/logger"
 	"encoding/base64"
+	"blog/conf"
 )
 
 func LoginAction(w http.ResponseWriter, r *http.Request) {
@@ -58,8 +59,8 @@ func LoginAction(w http.ResponseWriter, r *http.Request) {
 
 	// 存入cookie,使用cookie存储
 	t := time.Now();
-	expires := time.Date(t.Year(), t.Month(), t.Day(), t.Hour() + 1, t.Minute(), t.Second(), 0, time.Local);
-	cookie := http.Cookie{Name: "account_email", Value: base64.StdEncoding.EncodeToString([]byte(email)), Path: "/", Expires: expires};
+	expires := time.Date(t.Year(), t.Month(), t.Day(), t.Hour() + 5, t.Minute(), t.Second(), 0, time.Local);
+	cookie := http.Cookie{Name: conf.SESSION_KEY, Value: base64.StdEncoding.EncodeToString([]byte(email)), Path: "/", Expires: expires};
 	http.SetCookie(w, &cookie);
 
 	logger.Log("login", "SignIn", "[" + email + "][" + time.Unix(time.Now().Unix(), 0).Format("20060102150405") + "][" +
@@ -67,4 +68,13 @@ func LoginAction(w http.ResponseWriter, r *http.Request) {
 
 	OnResponse(w, 200, "ok", nil);
 
+}
+
+func LogoutAction(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie(conf.SESSION_KEY);
+	if (err == nil && cookie != nil) {
+		cookie := http.Cookie{Name: conf.SESSION_KEY, Value: "", Path: "/", Expires: time.Now().AddDate(0,0,0)};
+		http.SetCookie(w, &cookie);
+	}
+	http.Redirect(w, r, "/", http.StatusFound);
 }

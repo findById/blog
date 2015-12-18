@@ -7,6 +7,7 @@ import (
 	"blog/model/logger"
 	"time"
 	"encoding/json"
+	"blog/conf"
 )
 
 var templates = template.Must(template.ParseFiles("views/index.html",
@@ -23,7 +24,7 @@ func ExecuteTemplate(response http.ResponseWriter, tmp string, data interface{})
 }
 
 func CheckCookie(response http.ResponseWriter, request *http.Request, action string) bool  {
-	cookie, err := request.Cookie("account_email");
+	cookie, err := request.Cookie(conf.SESSION_KEY);
 	if (err != nil || cookie == nil) {
 		return false;
 	}

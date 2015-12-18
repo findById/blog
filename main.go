@@ -56,6 +56,7 @@ func main() {
 	mux.HandleFunc("/account", controller.AccountHandler);
 	mux.HandleFunc("/account/save", controller.UserSaveHandler);
 	mux.HandleFunc("/account/login", controller.LoginAction);
+	mux.HandleFunc("/logout", controller.LogoutAction);
 
 	// 博文
 	mux.HandleFunc("/articles", controller.ArticlesHandler);

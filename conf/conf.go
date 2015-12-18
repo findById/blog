@@ -17,6 +17,8 @@ const (
 	VERSION = "0.0.1"
 
 	DATABASE_NAME = "./build/blog.db"
+
+	SESSION_KEY = "SESSION";
 )
 
 var (

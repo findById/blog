@@ -27,6 +27,7 @@
                 <option value="Go">Go</option>
                 <option value="JavaScript">JavaScript</option>
                 <option value="C/C++">C/C++</option>
+                <option value="Log">Log</option>
             </select>
         </div>
         <lable></lable>
@@ -53,20 +54,8 @@
         },
         resize: "vertical",
         localStorage: "md",
-        imghost:"http://localhost/",
+        imghost:"http://img.testdomain.com/",
         imgurl: "/upload?timestamp=123456&nonce=123456&token=w8ARe4rISz8d3UdjSM9k&md=true",
         base64url: "/uploadBase64"
     });
-//    if (xhr.readyState === 4 && xhr.status === 200) {
-//        var res = xhr.responseText;
-//        if (xhr.resultType === 'json') {
-//            if ((typeof JSON) === 'undefine') {
-//                res = eval("(" + res + ")");
-//            } else {
-//                res = JSON.parse(res);
-//            }
-//        }
-//        uploadPanel.find('input.md-input-image-url').val(res.result][0].Path);
-//        alert(res);
-//    }
 </script>
